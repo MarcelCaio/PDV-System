@@ -6,8 +6,6 @@
 package DAO;
 
 import Model.Clientes;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.ResultSetImpl;
 import connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,7 +13,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-import view.ClientesView;
 
 /**
  *
@@ -26,9 +23,12 @@ public class ClientesDAO {
     private Connection con;
 
     public ClientesDAO() {
+        //open connection to DB
         this.con = new ConnectionFactory().getConnection();
     }
 
+    
+    //register new customers in the DB
     public void cadastrarCliente(Clientes obj) {
         try {
             String sql = "insert into tb_clientes ("
@@ -61,6 +61,7 @@ public class ClientesDAO {
 
     }
 
+    //Alter customers in DB
     public void alterarClinte(Clientes obj) {
 
         try {
@@ -94,6 +95,7 @@ public class ClientesDAO {
         }
     }
 
+    //Delete customers in DB
     public void excluirClientes(Clientes obj) {
 
         try {
@@ -112,13 +114,14 @@ public class ClientesDAO {
         }
     }
 
+    //List all customers in to table
     public List<Clientes> listarClientes() {
 
         try {
-            //criar lista
+            //Create List
             List<Clientes> lista = new ArrayList<>();
 
-            //comando sql
+            //SQL command
             String sqlList = "select id, nome, celular, pessoa, cpfcnpj from  tb_clientes";
 
             java.sql.PreparedStatement stmt = con.prepareStatement(sqlList);
@@ -146,13 +149,13 @@ public class ClientesDAO {
         }
     }
 
+    //accesses in DB all the information of a customer through the id
     public Clientes exibirCliente(String id) {
         try {
-            //comando sql
+           
             String sqlList = "select * from  tb_clientes where id=" + id + ";";
 
             java.sql.PreparedStatement stmt = con.prepareStatement(sqlList);
-//            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
 
             Clientes clientes = new Clientes();
@@ -180,14 +183,15 @@ public class ClientesDAO {
         }
     }
 
+    //search the DB through the id, name or CPF/CNPJ
     public List<Clientes> PesquisarClientes(String tipo, String dado) {
 
         try {
-            //criar lista
+            //Create List
             List<Clientes> lista = new ArrayList<>();
             System.out.println("tipo: " + tipo + " * Dado: " + dado);
 
-            //comando sql
+            //switch case search
             String sqlList = null;
             switch (tipo) {
                 case "ID":
@@ -227,13 +231,12 @@ public class ClientesDAO {
         }
     }
 
+    //searches all the information of a customer searching by cpf
     public Clientes exibirClienteCpf(String cpf) {
         try {
-            //comando sql
             String sqlList = "select * from  tb_clientes where cpfcnpj like '" + cpf + "';";
 
             java.sql.PreparedStatement stmt = con.prepareStatement(sqlList);
-//            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
 
             Clientes clientes = new Clientes();

@@ -9,3 +9,5 @@ dist
 nbproject
 
 test
+
+.gitignore
