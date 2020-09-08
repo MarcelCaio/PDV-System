@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Model.Fornecedores;
@@ -16,18 +11,19 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 
-/**
- *
- * @author marce
- */
 public class ProdutosDAO {
 
     private Connection con;
 
     public ProdutosDAO() {
+        //open connection
         this.con = new ConnectionFactory().getConnection();
     }
 
+    /**
+     * Register new product in the DB
+     * @param obj 
+     */
     public void cadastrarProduto(Produtos obj) {
         try {
             String sql = "insert into tb_produtos(codBarras, descricao, estoque, unidade,"
@@ -63,13 +59,16 @@ public class ProdutosDAO {
         }
     }
 
+    /**
+     * List all products in DB
+     * @return 
+     */
     public List<Produtos> listarFuncionarios() {
 
         try {
-            //criar lista
+            
             List<Produtos> lista = new ArrayList<>();
 
-            //comando sql
             String sqlList = "select p.codBarras, p.descricao, p.precoVenda, p.estoque, p.unidade, f.nome from  tb_produtos as p"
                     + " inner join tb_fornecedores as f on (p.for_id = f.id);";
 
@@ -100,13 +99,17 @@ public class ProdutosDAO {
         }
     }
 
+    /**
+     * Show Producto in DB through Id
+     * @param id
+     * @return 
+     */
     public Produtos exibirProduto(String id) {
         try {
-            //comando sql
+            
             String sqlList = "select * from  tb_produtos where codBarras ='" + id + "';";
 
             java.sql.PreparedStatement stmt = con.prepareStatement(sqlList);
-//            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
 
             Produtos produtos = new Produtos();
@@ -130,7 +133,6 @@ public class ProdutosDAO {
 
                 String sqlFor = "select * from tb_fornecedores where id = " + rs.getInt("for_id") + ";";
                 java.sql.PreparedStatement stmt2 = con.prepareStatement(sqlFor);
-//            stmt.setString(1, id);
                 ResultSet rs2 = stmt2.executeQuery();
 
                 Fornecedores fornecedor = new Fornecedores();
@@ -151,6 +153,10 @@ public class ProdutosDAO {
         }
     }
 
+    /**
+     * Alter product info in the DB
+     * @param obj 
+     */
     public void editarProduto(Produtos obj) {
         try {
             String sql = "update tb_produtos set codBarras = ?, descricao = ?, estoque = ?, unidade = ?,"
@@ -187,6 +193,10 @@ public class ProdutosDAO {
         }
     }
 
+    /**
+     * Remove product in DB
+     * @param obj 
+     */
     public void excluirProduto(Produtos obj) {
 
         try {
@@ -206,15 +216,19 @@ public class ProdutosDAO {
 
     }
 
+    /**
+     * Search product information in DB through Description, suppliers or bar code
+     * @param tipo tipe
+     * @param dado data
+     * @return 
+     */
     public List<Produtos> PesquisarProdutos(String tipo, String dado) {
 
         try {
-            //criar lista
+            
             List<Produtos> lista = new ArrayList<>();
 
-            //comando sql
             String sqlList = null;
-            String sql = null;
             switch (tipo) {
                 case "Cód. Barras":
                     sqlList = "select p.codBarras, p.descricao, p.precoVenda, p.estoque, p.unidade, f.nome from  tb_produtos as p"
@@ -225,16 +239,6 @@ public class ProdutosDAO {
                             + " inner join tb_fornecedores as f on (p.for_id = f.id) where p.descricao like " + dado + ";";
                     break;
                 case "Fornecedor":
-//                    sql = "select id from  tb_fornecedores where nome like " + dado + ";";
-//                    java.sql.PreparedStatement stmt1 = con.prepareStatement(sqlList);
-//
-//                    ResultSet rs1 = stmt1.executeQuery();
-//                    
-//                    while (rs1.next()){
-//                        Fornecedores fornecedor1 = new Fornecedores();
-//                        int dado1 = rs1.getInt("id");
-//                    }
-
                     sqlList = "select p.codBarras, p.descricao, p.precoVenda, p.estoque, p.unidade, f.nome from  tb_produtos as p"
                             + " inner join tb_fornecedores as f on (p.for_id = f.id) where f.nome like " + dado + ";";
                     break;

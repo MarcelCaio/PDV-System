@@ -1,4 +1,4 @@
 (In Progress)
-PDV System whith MySQL DataBase.
+PDV System with MySQL DataBase.
 
 Next commit: doc.

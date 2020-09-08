@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Model.Clientes;
@@ -16,18 +11,19 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import util.UserLogin;
 
-/**
- *
- * @author marce
- */
 public class FuncionariosDAO {
 
     private Connection con;
 
     public FuncionariosDAO() {
+        //open connection
         this.con = new ConnectionFactory().getConnection();
     }
 
+    /**
+     * Register employees in DB
+     * @param obj 
+     */
     public void cadastrarFuncionario(Funcionarios obj) {
         try {
             String sql = "insert into tb_funcionarios ("
@@ -62,13 +58,17 @@ public class FuncionariosDAO {
 
     }
 
+    /**
+     * List all employees in DB
+     * @return 
+     */
     public List<Funcionarios> listarFuncionarios() {
 
         try {
-            //criar lista
+            
             List<Funcionarios> lista = new ArrayList<>();
 
-            //comando sql
+            
             String sqlList = "select id, nome, funcao, acesso from  tb_funcionarios";
 
             java.sql.PreparedStatement stmt = con.prepareStatement(sqlList);
@@ -94,6 +94,11 @@ public class FuncionariosDAO {
         }
     }
 
+    /**
+     * Show all employees in DB
+     * @param id
+     * @return 
+     */
     public Clientes exibirFuncionario(String id) {
         try {
             //comando sql
@@ -129,6 +134,10 @@ public class FuncionariosDAO {
         }
     }
 
+    /**
+     * alter employees in DB
+     * @param obj 
+     */
     public void alterarFuncionario(Funcionarios obj) {
 
         try {
@@ -164,6 +173,10 @@ public class FuncionariosDAO {
         }
     }
 
+    /**
+     * remove employees in DB
+     * @param obj 
+     */
     public void excluirFuncionario(Funcionarios obj) {
 
         try {
@@ -182,6 +195,12 @@ public class FuncionariosDAO {
         }
     }
 
+    /**
+     * list employees information in DB through the id, function, acess or name 
+     * @param tipo
+     * @param dado
+     * @return 
+     */
     public List<Funcionarios> PesquisarFuncionarios(String tipo, String dado) {
 
         try {
@@ -231,6 +250,12 @@ public class FuncionariosDAO {
         }
     }
 
+    /**
+     * Login
+     * @param login
+     * @param senha
+     * @return 
+     */
     public boolean Logar(String login, String senha) {
         try {
             String sql = "select * from tb_funcionarios where login = ? and senha = ?;";
@@ -244,7 +269,6 @@ public class FuncionariosDAO {
             Funcionarios funcionarios = new Funcionarios();
 
             while (rs.next()) {
-                UserLogin userLogin = new UserLogin();
                 funcionarios.setId(rs.getInt("id"));
                 funcionarios.setNome(rs.getString("nome"));
                 funcionarios.setLogin(rs.getString("login"));
@@ -259,9 +283,6 @@ public class FuncionariosDAO {
                 funcionarios.setComplemento(rs.getString("complemento"));
                 funcionarios.setBairro(rs.getString("bairro"));
                 funcionarios.setCidade(rs.getString("cidade"));
-//                userLogin.id = rs.getInt("id");
-//                userLogin.nome = rs.getString("nome");
-//                userLogin.acesso = rs.getString("acesso");
                 UserLogin.funcionario = funcionarios;
             }
             stmt.close();

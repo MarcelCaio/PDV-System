@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Model.ItensVenda;
@@ -11,18 +6,19 @@ import connection.ConnectionFactory;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author marce
- */
 public class ItemVendaDAO {
     
     private Connection con;
 
     public ItemVendaDAO() {
+        //open connection
         this.con = new ConnectionFactory().getConnection();
     }
     
+    /**
+     * register items in the current saleregister items in the current sale
+     * @param obj 
+     */
     public void cadastraItem(ItensVenda obj){
         try {
             

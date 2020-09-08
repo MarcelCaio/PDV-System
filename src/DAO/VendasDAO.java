@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Model.Vendas;
@@ -12,19 +7,19 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 
-/**
- *
- * @author marce
- */
 public class VendasDAO {
 
     private Connection con;
 
     public VendasDAO() {
+        //open connection
         this.con = new ConnectionFactory().getConnection();
     }
 
-    //cadastrar venda
+    /**
+     * register a new sell
+     * @param obj 
+     */
     public void cadastrarVenda(Vendas obj) {
         try {
             String sql = "insert into tb_vendas(hora, data_venda, total_venda, "
@@ -48,14 +43,15 @@ public class VendasDAO {
             stmt.execute();
             stmt.close();
 
-//            JOptionPane.showMessageDialog(null, "Venda Salva!");
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
-    //ultima venda
+    /**
+     * return a last sell
+     * @return 
+     */
     public int ultimaVenda() {
         try {
             int idVenda = 0;

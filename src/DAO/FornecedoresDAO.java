@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Model.Fornecedores;
@@ -14,17 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
 
-/**
- *
- * @author marce
- */
 public class FornecedoresDAO {
+
     private Connection con;
 
     public FornecedoresDAO() {
+        //open connection
         this.con = new ConnectionFactory().getConnection();
     }
 
+    /**
+     * register suppliers in the database
+     * @param obj 
+     */
     public void cadastrarFornecedor(Fornecedores obj) {
         try {
             String sql = "insert into tb_fornecedores ("
@@ -55,6 +52,10 @@ public class FornecedoresDAO {
         
     }
 
+    /**
+     * alter suppliers in the database
+     * @param obj 
+     */
     public void alterarFornecedor(Fornecedores obj) {
 
         try {
@@ -84,6 +85,10 @@ public class FornecedoresDAO {
         }
     }
 
+    /**
+     * delete suppliers in the database
+     * @param obj 
+     */
     public void excluirFornecedor(Fornecedores obj) {
 
         try {
@@ -102,6 +107,10 @@ public class FornecedoresDAO {
         }
     }
 
+    /**
+     * List all suppliers in database
+     * @return 
+     */
     public List<Fornecedores> listarFornecedores() {
 
         try {
@@ -134,13 +143,17 @@ public class FornecedoresDAO {
         }
     }
 
+    /**
+     * search suppliers information in DB through the id
+     * @param id
+     * @return 
+     */
     public Fornecedores exibirFornecedor(String id) {
         try {
-            //comando sql
+            
             String sqlList = "select * from  tb_fornecedores where id=" + id + ";";
 
             java.sql.PreparedStatement stmt = con.prepareStatement(sqlList);
-//            stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
 
             Fornecedores fornecedores = new Fornecedores();
@@ -167,6 +180,13 @@ public class FornecedoresDAO {
         }
     }
 
+    /**
+     * search suppliers information in DB through the id or name 
+     * 
+     * @param tipo
+     * @param dado
+     * @return 
+     */
     public List<Fornecedores> PesquisarFornecedores(String tipo, String dado) {
 
         try {
@@ -210,6 +230,11 @@ public class FornecedoresDAO {
         }
     }
     
+    /**
+     * search suppliers information in DB through the name
+     * @param dado
+     * @return 
+     */
     public Fornecedores nomeFornecedor(String dado) {
 
         try {
